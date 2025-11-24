@@ -1,0 +1,11 @@
+{% for report in reports %}
+<div class="report-card">
+    <h3>{{ report.get_report_type_display }}</h3>
+    <p><strong>Cible:</strong> {{ report.target_phone|default:report.target_account }}</p>
+    <p><strong>Statut:</strong> <span class="status-{{ report.status }}">{{ report.get_status_display }}</span></p>
+    <p><small>{{ report.created_at|date:"d/m/Y H:i" }}</small></p>
+    <a href="{% url 'reports:detail' report.pk %}">Voir détails</a>
+</div>
+{% empty %}
+<p>Aucun signalement.</p>
+{% endfor %}

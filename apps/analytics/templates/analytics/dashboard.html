@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}FraudGuard Analytics{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>FraudGuard Intelligence Center</h1>
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h3>Total Alertes (30j)</h3>
+            <p id="total-alerts">...</p>
+        </div>
+        <div class="stat-card">
+            <h3>Signalements</h3>
+            <p id="total-reports">...</p>
+        </div>
+        <div class="stat-card">
+            <h3>Risque Élevé</h3>
+            <p id="high-risk">...</p>
+        </div>
+    </div>
+
+    <div class="charts">
+        <canvas id="trendChart"></canvas>
+        <canvas id="riskPie"></canvas>
+    </div>
+
+    <div id="heatmap-container">
+        <h2>Carte des Arnaques (Cameroun)</h2>
+        <div id="map" style="height: 500px;"></div>
+    </div>
+
+    <a href="{% url 'analytics:export_csv' %}" class="btn">Exporter CSV</a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="{% static 'analytics/js/chart.js' %}"></script>
+<script src="{% static 'analytics/js/heatmap.js' %}"></script>
+{% endblock %}

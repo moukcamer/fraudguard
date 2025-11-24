@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Rapport Public FraudGuard - Novembre 2025</h1>
+<p><strong>Dernière mise à jour:</strong> {{ now|date:"d M Y H:i" }} WAT</p>
+<div id="public-stats">Chargement...</div>
+<script>
+    fetch('/api/analytics/api/stats/')
+        .then(r => r.json())
+        .then(d => {
+            document.getElementById('public-stats').innerHTML = `
+                <p>Alertes détectées (30 jours): <strong>${d.total_alerts}</strong></p>
+                <p>Signalements citoyens: <strong>${d.total_reports}</strong></p>
+                <p>Régions les plus touchées: ${d.top_regions.map(r => r.region).join(', ')}</p>
+            `;
+        });
+</script>
+{% endblock %}

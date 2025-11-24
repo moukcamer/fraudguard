@@ -1,0 +1,20 @@
+openapi: 3.0.3
+info:
+  title: FraudGuard API
+  version: 1.0.0
+  description: Real-time fraud detection API for Cameroon
+  contact:
+    email: api@fraudguard.cm
+servers:
+  - url: https://api.fraudguard.cm/v1
+    description: Production
+  - url: http://localhost:8000/api/v1
+    description: Development
+security:
+  - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

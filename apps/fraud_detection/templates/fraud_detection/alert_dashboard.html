@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FraudGuard - Real-time Alerts</title>
+    <script>
+        const ws = new WebSocket("ws://" + location.host + "/ws/fraud/alerts/");
+        ws.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            document.getElementById("risk").innerText = data.risk_score;
+            document.getElementById("level").innerText = data.risk_level.toUpperCase();
+            document.getElementById("level").style.color = 
+                data.risk_level === 'critical' ? 'red' :
+                data.risk_level === 'high' ? 'orange' : 'green';
+        };
+        setInterval(() => ws.send(JSON.stringify({action: "check_risk"})), 5000);
+    </script>
+</head>
+<body>
+    <h1>FraudGuard Live Monitor</h1>
+    <p>Risk Score: <strong id="risk">0.0</strong></p>
+    <p>Risk Level: <strong id="level">LOW</strong></p>
+</body>
+</html>

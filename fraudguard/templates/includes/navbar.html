@@ -1,0 +1,17 @@
+<nav class="navbar">
+    <div class="nav-brand">
+        <img src="{% static 'images/logo.png' %}" alt="FraudGuard" width="40"/>
+        <span>FraudGuard</span>
+    </div>
+    <ul class="nav-links">
+        <li><a href="/">Accueil</a></li>
+        <li><a href="{% url 'reports:submit' %}">Signaler</a></li>
+        <li><a href="{% url 'analytics:dashboard' %}">Statistiques</a></li>
+        {% if user.is_authenticated %}
+            <li><a href="/admin">Admin</a></li>
+            <li><a href="/logout">Déconnexion</a></li>
+        {% else %}
+            <li><a href="/login">Connexion</a></li>
+        {% endif %}
+    </ul>
+</nav>

@@ -1,0 +1,34 @@
+Django>=4.2,<5.0
+djangorestframework
+django-cors-headers
+psycopg2-binary
+whitenoise
+
+# ASGI & WebSocket
+channels>=4.0
+channels-redis>=4.1
+daphne>=4.0
+
+# Celery (Full Stack)
+celery>=5.3
+redis>=5.0
+django-celery-beat
+django-celery-results
+
+# API
+djangorestframework-simplejwt
+PyJWT
+drf-yasg
+
+# ML
+scikit-learn
+joblib
+torch>=2.0
+transformers
+datasets
+
+# Utils
+kafka-python
+requests
+Pillow
+python-dotenv

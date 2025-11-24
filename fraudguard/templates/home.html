@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Accueil - FraudGuard{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h1>Détectez et Signalez les Arnaques en Temps Réel</h1>
+    <p>Protégez-vous contre le phishing, les faux comptes et les fraudes Mobile Money au Cameroun.</p>
+    <a href="{% url 'reports:submit' %}" class="btn-primary">Signaler une Arnaque</a>
+</div>
+
+<div class="stats">
+    <div class="stat">
+        <h3>12,483</h3>
+        <p>Arnaques bloquées</p>
+    </div>
+    <div class="stat">
+        <h3>8,721</h3>
+        <p>Signalements</p>
+    </div>
+    <div class="stat">
+        <h3>98%</h3>
+        <p>Précision IA</p>
+    </div>
+</div>
+{% endblock %}

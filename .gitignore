@@ -1,0 +1,17 @@
+# Django
+*.pyc
+__pycache__/
+db.sqlite3
+media/*
+!.gitkeep
+
+# Env
+.env
+.venv/
+
+# Docker
+docker-compose.override.yml
+
+# IDE
+.vscode/
+.idea/

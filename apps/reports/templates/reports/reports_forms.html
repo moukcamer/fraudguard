@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Signaler une Arnaque</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Envoyer le signalement</button>
+</form>
+{% endblock %}
