@@ -28,7 +28,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'drf_yasg',
     'corsheaders',
-    'channels',
+    #'channels',
 
     # Local apps
     'apps.accounts',
@@ -134,14 +134,14 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 # Channels (WebSocket)
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            'hosts': [('127.0.0.1', 6379)],
-        },
-    },
-}
+#CHANNEL_LAYERS = {
+ #   'default': {
+  #      'BACKEND': 'channels_redis.core.RedisChannelLayer',
+   #     'CONFIG': {
+    #        'hosts': [('127.0.0.1', 6379)],
+     #   },
+    #},
+#}
 
 # Swagger
 SWAGGER_SETTINGS = {

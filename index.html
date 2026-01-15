@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FraudGuard – Solution IA de Détection de Fraude SMS & Appels</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #0066cc;
+            --telecom-blue: #0052a5;
+            --telecom-dark: #0a1931;
+            --telecom-light: #2d8fff;
+            --security-green: #00cc66;
+            --warning-orange: #ff9900;
+            --danger-red: #ff3333;
+            --light-bg: #f5f9ff;
+            --white: #ffffff;
+            --gray: #eef2f7;
+            --dark-text: #1a1a2e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--telecom-dark) 0%, var(--telecom-blue) 100%);
+            color: var(--white);
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo i {
+            color: var(--security-green);
+            font-size: 2rem;
+        }
+
+        .logo span {
+            color: var(--security-green);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+
+        nav a:hover {
+            color: var(--security-green);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .cta-button {
+            background-color: var(--security-green);
+            color: var(--white);
+            padding: 0.7rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 2px solid var(--security-green);
+        }
+
+        .cta-button:hover {
+            background-color: transparent;
+            color: var(--security-green);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(10, 25, 49, 0.9), rgba(10, 25, 49, 0.9)), url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--white);
+            padding: 12rem 5% 8rem;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero .highlight {
+            color: var(--security-green);
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            max-width: 800px;
+            margin: 0 auto 2.5rem;
+            opacity: 0.9;
+        }
+
+        .slogan {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin: 2rem 0;
+            color: var(--telecom-light);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 5%;
+            background-color: var(--white);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--telecom-blue);
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background-color: var(--gray);
+            border-radius: 10px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 4px solid var(--telecom-blue);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--telecom-blue);
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--telecom-dark);
+        }
+
+        /* Partners Section */
+        .partners {
+            padding: 5rem 5%;
+            background-color: var(--light-bg);
+            text-align: center;
+        }
+
+        .partners-logos {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .partner-logo {
+            background-color: var(--white);
+            padding: 1.5rem 2.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            font-weight: 700;
+            color: var(--telecom-blue);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Demo Section */
+        .demo {
+            padding: 6rem 5%;
+            background: linear-gradient(135deg, var(--telecom-dark) 0%, var(--telecom-blue) 100%);
+            color: var(--white);
+            text-align: center;
+        }
+
+        .demo-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .demo-box {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 3rem;
+            margin-top: 3rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .demo-options {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .demo-btn {
+            background-color: var(--security-green);
+            color: var(--white);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .demo-btn:hover {
+            background-color: var(--telecom-light);
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--telecom-dark);
+            color: var(--white);
+            padding: 4rem 5% 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--security-green);
+        }
+
+        .footer-section p {
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+        }
+
+        .creator {
+            color: var(--security-green);
+            font-weight: 600;
+        }
+
+        /* Stats Counter */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            margin: 4rem 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--security-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem 5%;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            .hero {
+                padding: 10rem 5% 6rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .slogan {
+                font-size: 1.4rem;
+            }
+
+            .stats {
+                gap: 2rem;
+            }
+
+            .stat-number {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .demo-options {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <i class="fas fa-shield-alt"></i>
+            <h1>Fraud<span>Guard</span></h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#fonctionnalites">Fonctionnalités</a></li>
+                <li><a href="#partenaires">Partenaires</a></li>
+                <li><a href="/admin/" class="cta-button">Espace Admin</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="accueil">
+        <h1>Protégez vos abonnés contre la <span class="highlight">fraude télécom</span></h1>
+        <p class="slogan">L'intelligence artificielle au service de la sécurité des réseaux</p>
+        <p>Solution de détection en temps réel des fraudes SMS et appels vocaux pour les opérateurs télécoms au Cameroun et en Afrique</p>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number" id="fraudCount">0</div>
+                <div class="stat-label">Fraudes détectées</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="responseTime">0ms</div>
+                <div class="stat-label">Temps de réponse</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="accuracyRate">99.8%</div>
+                <div class="stat-label">Précision</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="fonctionnalites">
+        <div class="section-title">
+            <h2>Une solution complète de sécurité télécom</h2>
+            <p>Notre plateforme utilise l'IA avancée pour identifier et bloquer les activités frauduleuses en temps réel</p>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3>Détection en temps réel</h3>
+                <p>Analyse instantanée des appels et SMS pour identifier les comportements suspects dès qu'ils se produisent.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3>IA auto-apprenante</h3>
+                <p>Notre algorithme s'améliore continuellement avec chaque nouvelle menace détectée pour une protection optimale.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>Tableaux de bord analytiques</h3>
+                <p>Visualisez les tendances de fraude et obtenez des insights actionnables pour renforcer votre sécurité.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Section -->
+    <section class="partners" id="partenaires">
+        <div class="section-title">
+            <h2>Déjà adopté par les leaders du secteur</h2>
+            <p>Notre solution est déployée chez les principaux opérateurs télécoms au Cameroun</p>
+        </div>
+        
+        <div class="partners-logos">
+            <div class="partner-logo">
+                <i class="fas fa-signal"></i>
+                <span>Orange Cameroun</span>
+            </div>
+            <div class="partner-logo">
+                <i class="fas fa-broadcast-tower"></i>
+                <span>MTN Cameroon</span>
+            </div>
+            <div class="partner-logo">
+                <i class="fas fa-satellite-dish"></i>
+                <span>Nexttel</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section class="demo">
+        <div class="demo-container">
+            <h2>Testez notre technologie de détection</h2>
+            <p>Expérimentez la puissance de notre IA en analysant des exemples de communications</p>
+            
+            <div class="demo-box">
+                <p>Sélectionnez une option pour tester notre système de détection de fraude :</p>
+                
+                <div class="demo-options">
+                    <button class="demo-btn" id="testSMS">
+                        <i class="fas fa-sms"></i>
+                        Tester un SMS suspect
+                    </button>
+                    
+                    <button class="demo-btn" id="testCall">
+                        <i class="fas fa-phone-alt"></i>
+                        Tester un appel frauduleux
+                    </button>
+                    
+                    <a href="/api/analytics/dashboard/" class="demo-btn">
+                        <i class="fas fa-chart-bar"></i>
+                        Voir le Dashboard
+                    </a>
+                </div>
+                
+                <div id="demoResult" style="margin-top: 2rem; padding: 1.5rem; background-color: rgba(0,0,0,0.2); border-radius: 8px; display: none;">
+                    <h3 id="resultTitle">Résultat de l'analyse</h3>
+                    <p id="resultText"></p>
+                    <div id="riskLevel" style="font-weight: 700; margin-top: 1rem;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>FraudGuard</h3>
+                <p>Solution leader de détection de fraude SMS et appels pour les opérateurs télécoms en Afrique.</p>
+                <p>Notre technologie protège des millions d'abonnés chaque jour.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Liens rapides</h3>
+                <p><a href="/admin/" style="color: var(--white);">Espace Administrateur</a></p>
+                <p><a href="/api/fraud/risk/" style="color: var(--white);">API de détection</a></p>
+                <p><a href="/api/analytics/dashboard/" style="color: var(--white);">Tableau de bord analytique</a></p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p><i class="fas fa-user-tie"></i> Moukam Merlin, Consultant en IA</p>
+                <p><i class="fas fa-envelope"></i> merlinmoukam2@gmail.com</p>
+                <p><i class="fas fa-phone"></i> +237 699 390 737</p>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2026 FraudGuard. Tous droits réservés. | Solution développée par <span class="creator">Moukam Merlin</span>, expert en intelligence artificielle.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Animation des compteurs
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animation des statistiques
+            function animateCounter(elementId, targetValue, suffix = '', duration = 2000) {
+                const element = document.getElementById(elementId);
+                let startValue = 0;
+                const increment = targetValue / (duration / 16); // 60fps
+                
+                function updateCounter() {
+                    startValue += increment;
+                    if (startValue < targetValue) {
+                        element.textContent = Math.floor(startValue) + suffix;
+                        setTimeout(updateCounter, 16);
+                    } else {
+                        element.textContent = targetValue + suffix;
+                    }
+                }
+                
+                updateCounter();
+            }
+            
+            // Initialiser les compteurs
+            animateCounter('fraudCount', 12543);
+            animateCounter('responseTime', 45, 'ms');
+            
+            // Simulation de test de fraude
+            document.getElementById('testSMS').addEventListener('click', function() {
+                const resultDiv = document.getElementById('demoResult');
+                const resultTitle = document.getElementById('resultTitle');
+                const resultText = document.getElementById('resultText');
+                const riskLevel = document.getElementById('riskLevel');
+                
+                resultTitle.textContent = "Analyse d'un SMS suspect";
+                resultText.textContent = "SMS détecté : 'Félicitations! Vous avez gagné 5 000 000 FCFA. Cliquez sur ce lien pour réclamer votre prix : http://frauduleux.cm'";
+                riskLevel.textContent = "Niveau de risque : ÉLEVÉ (95% de probabilité de fraude)";
+                riskLevel.style.color = "#ff3333";
+                
+                resultDiv.style.display = 'block';
+                
+                // Animation pour attirer l'attention
+                resultDiv.style.transform = 'scale(1.05)';
+                setTimeout(() => {
+                    resultDiv.style.transform = 'scale(1)';
+                }, 300);
+            });
+            
+            document.getElementById('testCall').addEventListener('click', function() {
+                const resultDiv = document.getElementById('demoResult');
+                const resultTitle = document.getElementById('resultTitle');
+                const resultText = document.getElementById('resultText');
+                const riskLevel = document.getElementById('riskLevel');
+                
+                resultTitle.textContent = "Analyse d'un appel suspect";
+                resultText.textContent = "Appel détecté : Numéro +237 6XX XX XX XX appelle 15 numéros différents en moins de 2 minutes (modèle de spam détecté)";
+                riskLevel.textContent = "Niveau de risque : MODÉRÉ (78% de probabilité de fraude)";
+                riskLevel.style.color = "#ff9900";
+                
+                resultDiv.style.display = 'block';
+                
+                // Animation pour attirer l'attention
+                resultDiv.style.transform = 'scale(1.05)';
+                setTimeout(() => {
+                    resultDiv.style.transform = 'scale(1)';
+                }, 300);
+            });
+            
+            // Ajouter un effet de défilement fluide pour les ancres
+            document.querySelectorAll('nav a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    if(this.getAttribute('href').startsWith('#')) {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('href');
+                        const targetElement = document.querySelector(targetId);
+                        
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
